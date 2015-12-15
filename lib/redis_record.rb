@@ -1,0 +1,2 @@
+module RedisRecord
+end
