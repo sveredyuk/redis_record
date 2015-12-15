@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    redis_record (0.0.1)
+    redis_record (0.1.0)
       rails (~> 4.2.5)
       redis
 
@@ -48,9 +48,7 @@ GEM
     coderay (1.1.0)
     concurrent-ruby (1.0.0)
     diff-lcs (1.2.5)
-    docile (1.1.5)
     erubis (2.7.0)
-    evented-spec (0.9.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
     ffaker (2.1.0)
@@ -72,6 +70,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-rails (0.3.4)
+      pry (>= 0.9.10)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -105,10 +105,6 @@ GEM
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
       rspec-mocks (~> 3.4.0)
-    rspec-activemodel-mocks (1.0.2)
-      activemodel (>= 3.0)
-      activesupport (>= 3.0)
-      rspec-mocks (>= 2.99, < 4.0)
     rspec-core (3.4.1)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
@@ -126,17 +122,6 @@ GEM
       rspec-mocks (~> 3.4.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
-    shoulda (3.5.0)
-      shoulda-context (~> 1.0, >= 1.0.1)
-      shoulda-matchers (>= 1.4.1, < 3.0)
-    shoulda-context (1.2.1)
-    shoulda-matchers (2.8.0)
-      activesupport (>= 3.0.0)
-    simplecov (0.11.1)
-      docile (~> 1.1.0)
-      json (~> 1.8)
-      simplecov-html (~> 0.10.0)
-    simplecov-html (0.10.0)
     slop (3.6.0)
     sprockets (3.5.2)
       concurrent-ruby (~> 1.0)
@@ -156,17 +141,14 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
-  evented-spec
   factory_girl
   ffaker
   pry
+  pry-rails
   rake
   redis_record!
   rspec
-  rspec-activemodel-mocks
   rspec-rails
-  shoulda
-  simplecov
   sqlite3
 
 BUNDLED WITH

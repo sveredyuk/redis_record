@@ -23,14 +23,11 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'rspec-activemodel-mocks'
   s.add_development_dependency 'ffaker'
   s.add_development_dependency 'factory_girl'
-  s.add_development_dependency 'shoulda'
   s.add_development_dependency 'sqlite3'
-  s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'evented-spec'
   s.add_development_dependency 'pry'
+  s.add_development_dependency 'pry-rails'
 
   s.add_runtime_dependency 'redis'
 end
