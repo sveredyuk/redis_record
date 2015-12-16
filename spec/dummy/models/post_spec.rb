@@ -25,11 +25,6 @@ describe Post do
           post.title = 'Random Title'
           expect(post.title).to eq 'Random Title'
         end
-
-        it 'get any value but convert it to string' do
-          post.title = 3.1415
-          expect(post.title).to eq '3.1415'
-        end
       end
     end
 
@@ -39,11 +34,57 @@ describe Post do
           post.body = 'Random body'
           expect(post.body).to eq 'Random body'
         end
+      end
+    end
+  end
 
-        it 'get any value but convert it to string' do
-          post.body = 3541269708
-          expect(post.body).to eq '3541269708'
-        end
+  describe 'Types' do
+    describe 'String' do
+      it 'setted as default type' do
+        expect{post.title = 'Test title'}.not_to raise_error
+        expect{post.title = 100}.to raise_error RuntimeError, 'WrongFormat: value must be String'
+      end
+
+      it 'get as String' do
+        post.title = 'Best title ever'
+        expect(post.title).to be_kind_of String
+      end
+
+      it 'excellent also work if statically typed' do
+        expect{post.author = 'Test author'}.not_to raise_error
+        expect{post.author = 100}.to raise_error RuntimeError, 'WrongFormat: value must be String'
+      end
+
+      it 'get as String' do
+        post.author = 'Best author ever'
+        expect(post.author).to be_kind_of String
+      end
+    end
+
+    describe 'Integer' do
+      it 'excellent work' do
+        expect{post.rank = 5}.not_to raise_error
+        expect{post.rank = '5'}.to raise_error RuntimeError, 'WrongFormat: value must be Integer'
+      end
+
+      it 'get as Integer' do
+        post.rank = 5
+        expect(post.rank).to be_kind_of Integer
+      end
+    end
+
+    describe 'Float' do
+      it 'excellent work' do
+        expect{post.weight = 99.9}.not_to raise_error
+        expect{post.weight = 99}.not_to raise_error
+        expect{post.weight = '99.9'}.to raise_error RuntimeError, 'WrongFormat: value must be Float'
+      end
+
+      it 'get as Float' do
+        post.weight = 77.7
+        expect(post.weight).to be_kind_of Float
+        post.weight = 77
+        expect(post.weight).to be_kind_of Float
       end
     end
   end
@@ -272,7 +313,7 @@ describe Post do
           double_post = Post.new(title: 'Unique title')
           double_post.save
           expect(Post.all.size).to eq 2
-          #expect(double_post.unique?(:title)).to eq false # TODO BUG VS -> some timeout issues
+          #expect(double_post.unique?(:title)).to eq false # TODO BUG -> some timeout issues
         end
       end
     end

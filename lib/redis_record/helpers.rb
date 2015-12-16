@@ -33,5 +33,22 @@ module RedisRecord
     def normalize_value(value)
       value.to_s
     end
+
+    def get_type(name)
+      self.class.types[name.to_s]
+    end
+
+    def convert_to_type(value, type)
+      case type.to_s
+      when 'String'
+        value.to_s
+      when 'Integer'
+        value.to_i
+      when 'Float'
+        value.to_f
+      else
+        value.to_s
+      end
+    end
   end
 end
