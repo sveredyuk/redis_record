@@ -7,7 +7,7 @@ module RedisRecord
     end
 
     def find(id)
-      redis.exists(key(id)) ? new(redis.hgetall(key(id))) : nil
+      redis.exists(key(id)) ? new(normalize_hash(redis.hgetall(key(id)))) : nil
     end
 
     def find_by(atr, value)
@@ -15,7 +15,14 @@ module RedisRecord
     end
 
     def destroy_all
-      all.each(&:destroy)
+      all.each(&:destroy).size
+    end
+
+    private
+
+    # Convert all strings keys in hash to symbols
+    def normalize_hash(hash)
+      hash.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
     end
   end
 end

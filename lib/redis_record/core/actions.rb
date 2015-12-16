@@ -20,7 +20,7 @@ module RedisRecord
       return false unless valid?
 
       redis.mapped_hmset(self.class.key(id), @fields)
-      true
+      self
     end
 
     def update(hash)

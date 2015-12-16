@@ -5,7 +5,7 @@ module RedisRecord
     end
 
     def id
-      @fields['id'] ||= SecureRandom.hex(10)
+      @fields[:id] ||= SecureRandom.hex(10)
     end
 
     def persisted?
@@ -27,7 +27,7 @@ module RedisRecord
     end
 
     def normalize_key(key)
-      key.to_s
+      key.to_sym
     end
 
     def normalize_value(value)
