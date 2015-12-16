@@ -1,4 +1,4 @@
-require 'redis_record/core/base'
+require 'redis_record/base'
 
 class Post < RedisRecord::Base
   field :title
