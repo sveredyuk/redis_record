@@ -12,15 +12,15 @@ module RedisRecord
       false
     end
 
-    def fields
+    def attributes
       @fields.dup
     end
+
+    private
 
     def find_by(atr, value)
       self.class.find_by(atr, value)
     end
-
-    private
 
     def key
       self.class.key(id)
