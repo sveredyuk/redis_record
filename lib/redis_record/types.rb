@@ -1,11 +1,14 @@
 module RedisRecord
   module Types
-    attr_reader :types
 
     def set_type(name, type)
       @types = redis.hgetall("#{self}Types")
       @types.merge!(name => type)
       redis.mapped_hmset("#{self}Types", @types)
+    end
+
+    def types
+      normalize_hash(@types)
     end
   end
 end

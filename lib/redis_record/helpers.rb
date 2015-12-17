@@ -35,7 +35,7 @@ module RedisRecord
     end
 
     def get_type(name)
-      self.class.types[name.to_s]
+      self.class.types[name.to_sym]
     end
 
     def convert_to_type(value, type)

@@ -22,7 +22,7 @@ module RedisRecord
 
     # Convert all strings keys in hash to symbols
     def normalize_hash(hash)
-      hash.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+      Hash[hash.map{ |k, v| [k.to_sym, v] }]
     end
   end
 end
