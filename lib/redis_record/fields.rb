@@ -6,11 +6,11 @@ module RedisRecord
       raise ArgumentError, "Already defined #{name} field" if instance_methods.include?(name.to_sym)
 
       define_method("#{name}") do
-        convert_to_type( @fields[normalize_key(name)], get_type(name))
+        Types::Converter.convert(@fields[normalize_key(name)], get_type(name))
       end
 
       define_method("#{name}=") do |value|
-        unless value == convert_to_type(value, get_type(name))
+        unless value == Types::Converter.convert(value, get_type(name))
           raise "WrongFormat: value must be #{get_type(name)}"
         end
 

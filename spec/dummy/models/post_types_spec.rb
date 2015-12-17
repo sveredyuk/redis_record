@@ -12,7 +12,7 @@ describe Post do
 
   describe 'Types' do
     describe 'String' do
-      it 'setted as default type' do
+      it 'set as default type' do
         expect{post.title = 'Test title'}.not_to raise_error
         expect{post.title = 100}.to raise_error RuntimeError, 'WrongFormat: value must be String'
       end
@@ -22,7 +22,7 @@ describe Post do
         expect(post.title).to be_instance_of String
       end
 
-      it 'excellent also work if statically typed' do
+      it 'excellent work if statically typed' do
         expect{post.author = 'Test author'}.not_to raise_error
         expect{post.author = 100}.to raise_error RuntimeError, 'WrongFormat: value must be String'
       end
@@ -109,9 +109,24 @@ describe Post do
       end
     end
 
+    describe 'Time' do
+      it 'excellent work' do
+        expect{ post.published_at = Time.now }.not_to raise_error
+        expect{ post.published_at = 'str' }.to raise_error RuntimeError, 'WrongFormat: value must be Time'
+        expect{ post.published_at = 12345 }.to raise_error RuntimeError, 'WrongFormat: value must be Time'
+        expect{ post.published_at = true  }.to raise_error RuntimeError, 'WrongFormat: value must be Time'
+        expect{ post.published_at = false }.to raise_error RuntimeError, 'WrongFormat: value must be Time'
+      end
+
+      it 'get as Time' do
+        post.published_at = Time.now
+        expect(post.published_at).to be_instance_of Time
+      end
+    end
+
     describe '.types' do
       it 'return hash with all types' do
-        hash = { title: "String", body: "String", author: "String", rank: "Integer", weight: "Float", featured: "Bool", credentials: "Array", details: "Hash" }
+        hash = { title: "String", body: "String", author: "String", rank: "Integer", weight: "Float", featured: "Bool", credentials: "Array", details: "Hash", published_at: "Time" }
         expect(Post.types).to eq hash
       end
     end

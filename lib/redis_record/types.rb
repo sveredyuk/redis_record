@@ -10,6 +10,52 @@ module RedisRecord
     def types
       normalize_hash(@types)
     end
+
+    module Converter
+      extend self
+
+      def convert(value, type)
+        if type.to_s == 'String'
+          value.to_s
+
+        elsif type.to_s == 'Integer'
+          value.to_i
+
+        elsif type.to_s == 'Float'
+          value.to_f
+
+        elsif type.to_s == 'Bool'
+          Bool.convert(value)
+
+        elsif type.to_s == 'Array'
+        begin
+          return value if value && value.instance_of?(Array)
+          JSON.parse(value)
+        rescue
+          nil
+        end
+
+        elsif type.to_s == 'Hash'
+          return value if value && value.instance_of?(Hash)
+        begin
+          JSON.parse(value)
+        rescue
+          nil
+        end
+
+        elsif type.to_s == 'Time'
+          return value if value && value.instance_of?(Time)
+        begin
+          DateTime.parse(value)
+        rescue
+          nil
+        end
+
+        else
+          value.to_s
+        end
+      end
+    end
   end
 
   module Bool
@@ -37,8 +83,9 @@ class Bool; end
 # String
 # Integer
 # Float
-
-# TODO -> Add more types for support
 # Boolean
 # Array
 # Hash
+
+# TODO -> Add more types for support
+# DateTime
