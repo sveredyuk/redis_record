@@ -19,7 +19,7 @@ describe Post do
 
       it 'get as String' do
         post.title = 'Best title ever'
-        expect(post.title).to be_kind_of String
+        expect(post.title).to be_instance_of String
       end
 
       it 'excellent also work if statically typed' do
@@ -29,7 +29,7 @@ describe Post do
 
       it 'get as String' do
         post.author = 'Best author ever'
-        expect(post.author).to be_kind_of String
+        expect(post.author).to be_instance_of String
       end
     end
 
@@ -41,7 +41,7 @@ describe Post do
 
       it 'get as Integer' do
         post.rank = 5
-        expect(post.rank).to be_kind_of Integer
+        expect(post.rank).to be_instance_of Fixnum
       end
     end
 
@@ -54,15 +54,64 @@ describe Post do
 
       it 'get as Float' do
         post.weight = 77.7
-        expect(post.weight).to be_kind_of Float
+        expect(post.weight).to be_instance_of Float
         post.weight = 77
-        expect(post.weight).to be_kind_of Float
+        expect(post.weight).to be_instance_of Float
+      end
+    end
+
+    describe 'Bool' do
+      it 'excellent work' do
+        expect{post.featured = true }.not_to raise_error
+        expect{post.featured = false}.not_to raise_error
+        expect{post.featured = 'true'}.to raise_error RuntimeError, 'WrongFormat: value must be Bool'
+        expect{post.featured = 'false'}.to raise_error RuntimeError, 'WrongFormat: value must be Bool'
+        expect{post.featured = 777}.to raise_error RuntimeError, 'WrongFormat: value must be Bool'
+      end
+
+      it 'get as Bool' do
+        post.featured = true
+        expect(post.featured).to be_instance_of TrueClass
+        post.featured = false
+        expect(post.featured).to be_instance_of FalseClass
+      end
+    end
+
+    describe 'Array' do
+      let(:arr) { [1, 'a', true] }
+      it 'excellent work' do
+        expect{ post.credentials = arr   }.not_to raise_error
+        expect{ post.credentials = 'str' }.to raise_error RuntimeError, 'WrongFormat: value must be Array'
+        expect{ post.credentials = 12345 }.to raise_error RuntimeError, 'WrongFormat: value must be Array'
+        expect{ post.credentials = true  }.to raise_error RuntimeError, 'WrongFormat: value must be Array'
+        expect{ post.credentials = false }.to raise_error RuntimeError, 'WrongFormat: value must be Array'
+      end
+
+      it 'get as Array' do
+        post.credentials = arr
+        expect(post.credentials).to be_instance_of Array
+      end
+    end
+
+    describe 'Hash' do
+      let(:hsh) { {first: '1', second: '2'} }
+      it 'excellent work' do
+        expect{ post.details = hsh   }.not_to raise_error
+        expect{ post.details = 'str' }.to raise_error RuntimeError, 'WrongFormat: value must be Hash'
+        expect{ post.details = 12345 }.to raise_error RuntimeError, 'WrongFormat: value must be Hash'
+        expect{ post.details = true  }.to raise_error RuntimeError, 'WrongFormat: value must be Hash'
+        expect{ post.details = false }.to raise_error RuntimeError, 'WrongFormat: value must be Hash'
+      end
+
+      it 'get as Array' do
+        post.details = hsh
+        expect(post.details).to be_instance_of Hash
       end
     end
 
     describe '.types' do
       it 'return hash with all types' do
-        hash = { title: "String", body: "String", author: "String", rank: "Integer", weight: "Float" }
+        hash = { title: "String", body: "String", author: "String", rank: "Integer", weight: "Float", featured: "Bool", credentials: "Array", details: "Hash" }
         expect(Post.types).to eq hash
       end
     end

@@ -13,7 +13,7 @@ describe Post do
   describe 'Helpers' do
     describe '#redis' do
       it 'return current redis connection' do
-        expect(post.redis).to be_kind_of Redis
+        expect(post.redis).to be_instance_of Redis
       end
     end
 

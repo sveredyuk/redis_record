@@ -39,13 +39,34 @@ module RedisRecord
     end
 
     def convert_to_type(value, type)
-      case type.to_s
-      when 'String'
+      if type.to_s == 'String'
         value.to_s
-      when 'Integer'
+
+      elsif type.to_s == 'Integer'
         value.to_i
-      when 'Float'
+
+      elsif type.to_s == 'Float'
         value.to_f
+
+      elsif type.to_s == 'Bool'
+        Bool.convert(value)
+
+      elsif type.to_s == 'Array'
+      begin
+        return value if value.present? && value.kind_of?(Array)
+        JSON.parse(value)
+      rescue
+        nil
+      end
+
+      elsif type.to_s == 'Hash'
+        return value if value.present? && value.kind_of?(Hash)
+      begin
+        JSON.parse(value)
+      rescue
+        nil
+      end
+
       else
         value.to_s
       end
