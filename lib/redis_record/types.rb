@@ -86,6 +86,4 @@ class Bool; end
 # Boolean
 # Array
 # Hash
-
-# TODO -> Add more types for support
 # DateTime
