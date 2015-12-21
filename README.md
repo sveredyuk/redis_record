@@ -1,68 +1,138 @@
-This class allows one to store in and retrieve objects from Redis via ActiveRecord-like API
+# RedisRecord
 
-Example:
+Gem provide simple ORM for `redis/ruby/rails`.
 
+## Description
+
+You could easy operate with objects like `ActiveRecord/Mongoid` API style.
+The main goal was create 100% compatible API with rails controllers and be almost same like ActiveRecord API.
+
+Great thanks fot inspiration and support to **Michael Lutsiuk** and all members of my team.
+
+## Installation
+
+After release, gem will be added to `rubygems`
+
+Until please use github tag in you Gemfile:
 ```ruby
-    class Post < RedisModel
-      # Define all model attributes
-      set_attributes :title, :body, :author
-    
-      # or
-      # attribute :title
-      # attribute :body
-      # ...
-    
-      # ActiveMode::Validations are already included
-      validates :title, :body, presence: true
-    
-      # Just define model_name for normal dispatching
-      def self.model_name
-        ActiveModel::Name.new(self, nil, "Post")
-      end
-    end
+gem 'redis_record', github: 'svereredyuk/redis_record'
 ```
 
-In action:
-
+## Example
 ```ruby
-post = Post.new # => #<Post:0x007fa8362f0dd8 @attributes={:title=>nil, :body=>nil, :author=>nil}>
-post.save       # => false
-post.valid?     # => false
-post.errors     # => ... all errors
-
-post.title  = 'My Post'   # => "My Post"
-post.body   = 'Lorem....' # => "Lorem..."
-post.author = 'God'       # => "God"
-post.id                   # => "f6f0afbc2e790098cb2b" id for free from SecureRandom.hex(10)
-
-post.valid? # => true
-post.save   # => true
-
-Post.all # => [ #<Post:0x007fa4212f0ab8 @attributes={"title"=>"My Post", "body"=>"Lorem....", "author"=>"God", "id"=>"f6f0afbc2e790098cb2b"}> ]
-# .all return an Array of objects
-
-Post.find('f6f0afbc2e790098cb2b') #=> Find record by id
-
-Post.find_by(:title, 'My Post') # => Find first record with value of such attribute
-
-Post.destroy_all # => Destroy all records from Redis
+class Post < RedisRecord::Base
+  field: :title
+  field: :body,         type: String
+  field: :rank,         type: Integer
+  field: :featured,     type: Bool     default: false
+  field: :published_at, type: Time,    default: Time.now
+end
 ```
 
-Additional:
+Define single `field` with some type (String default) or multiple `fields` for attributes with identical types.
 
 ```ruby
-post.attributes # => all attributes with values
-post.update(title: 'Second Post') # => Update object (and save it)
-post.unique?(:title) # Check about uniquness for some attribiute
-post.destroy # => delete record from Redis.... bye
-
-Post.redis # => #<Redis client v3.2.1 for redis://127.0.0.1:6379/0>
-
-Post.key('f6f0afbc2e790098cb2b') # => "Post:f6f0afbc2e790098cb2b"
-
-Post.attributes # => get all colums list
-
-ActiveModel::Serializers available
-post.to_json
-post.to_xml
+fields: title, :body, :author, type: String
 ```
+
+Field types depent at value assign and value parse when call:
+
+```ruby
+p = Post.new
+p.title = "The best post ever"
+p.featured = true
+p.save          #=> true
+
+p.title         #=> "The best post ever"
+p.featured      #=> true
+
+p.rank          #=> nil
+p.rank = 'rank' #=> RuntimeError: WrongFormat: value must be Integer
+p.rank = 5
+p.rank          #=> 5
+
+p.update(title: "New title") #=> true
+p.title         #=> "New title"
+
+p.destroy       #=> true
+p.reload        #=> nil
+```
+
+## Field Types
+Current library support next types:
+* String (by default if not defined)
+* Integer
+* Float
+* Bool (old good Boolean)
+* Array
+* Hash
+* Time (DateTime in fact)
+
+## Validations
+
+Out of the box you has all `ActiveModel::Validations`
+
+in model:
+```ruby
+validates :title, presence: true
+```
+and:
+
+```ruby
+p = Post.new
+p.save    #=> false
+p.valid?  #=> false
+p.errors  #=> {:title=>["can't be blank"]}
+p.title = "Blah"
+p.valid?  #=> true
+p.save    #=> true
+```
+
+Uniqueness validations meet some troubles such as it part of `ActiveRecord::Validations`.
+
+But you could use `#unique?`
+
+```ruby
+p.title = "Test"
+p.save
+
+new_post = Post.new(title: "Test")
+new_post.unique?(:title) #=> false
+```
+
+`TODO: Add special uniqueness validator.`
+
+## Serializations
+
+Also included `ActiveModel::Serializers::JSON` and `ActiveModel::Serializers::Xml`
+
+## Associations
+
+``` ruby
+# TODO: WIP!
+```
+
+## Callbacks
+
+
+``` ruby
+# TODO: WIP!
+```
+
+## Connection
+
+For connection to Redis we use `Redis.current` from `redis-rb` lib.
+
+```ruby
+Post.reids #=> #<Redis client v3.2.2 for redis://127.0.0.1:6379/0>
+```
+
+Manage seetings in your `redis.yml`
+
+## TODO
+
+* Associations: belongs_to, has_many... etc
+* Better uniqueness validator
+* Timestamps extension: created_at, updated_at
+* Callbacks
+* Some more featues ?
