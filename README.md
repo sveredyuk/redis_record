@@ -4,10 +4,13 @@ Gem provide simple ORM for `redis/ruby/rails`.
 
 ## Description
 
-You could easy operate with objects like `ActiveRecord/Mongoid` API style.
+You could easy operate with objects in `ActiveRecord/Mongoid` API like style.
 The main goal was create 100% compatible API with rails controllers and be almost same like ActiveRecord API.
 
-Great thanks fot inspiration and support to **Michael Lutsiuk** and all members of my team.
+Try to generate simple scaffold with all MVC and than just change ActiveRecord model to RedisRecord (with all fields defined).
+And try it! It great works!
+
+Great thanks for inspiration and support to **Michael Lutsiuk** and all members of my team.
 
 ## Installation
 
@@ -29,13 +32,15 @@ class Post < RedisRecord::Base
 end
 ```
 
-Define single `field` with some type (String default) or multiple `fields` for attributes with identical types.
+Define single `field` with some type (String is default if type not defined) or multiple `fields` for attributes with identical type.
 
 ```ruby
 fields: title, :body, :author, type: String
 ```
 
-Field types depent at value assign and value parse when call:
+You could define the default value for field by `default` option.
+
+Field's type depent at value assign and parse when call:
 
 ```ruby
 p = Post.new
@@ -47,7 +52,7 @@ p.title         #=> "The best post ever"
 p.featured      #=> true
 
 p.rank          #=> nil
-p.rank = 'rank' #=> RuntimeError: WrongFormat: value must be Integer
+p.rank = "rank" #=> RuntimeError: WrongFormat: value must be Integer
 p.rank = 5
 p.rank          #=> 5
 
@@ -70,7 +75,7 @@ Current library support next types:
 
 ## Validations
 
-Out of the box you has all `ActiveModel::Validations`
+Out of the box you have all `ActiveModel::Validations`
 
 in model:
 ```ruby
@@ -88,9 +93,9 @@ p.valid?  #=> true
 p.save    #=> true
 ```
 
-Uniqueness validations meet some troubles such as it part of `ActiveRecord::Validations`.
+Uniqueness validations meet some troubles such as it is part of `ActiveRecord::Validations` and depent on database adapter.
 
-But you could use `#unique?`
+But you could use `#unique?` method:
 
 ```ruby
 p.title = "Test"
@@ -133,6 +138,6 @@ Manage seetings in your `redis.yml`
 
 * Associations: belongs_to, has_many... etc
 * Better uniqueness validator
-* Timestamps extension: created_at, updated_at
 * Callbacks
-* Some more featues ?
+* Timestamps extension: created_at, updated_at
+* Try to reproduce 100% ActiveRecord API.
