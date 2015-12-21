@@ -2,27 +2,29 @@ This class allows one to store in and retrieve objects from Redis via ActiveReco
 
 Example:
 
-class Post < RedisModel
-  # Define all model attributes
-  set_attributes :title, :body, :author
-
-  # or
-  # attribute :title
-  # attribute :body
-  # ...
-
-  # ActiveMode::Validations are already included
-  validates :title, :body, presence: true
-
-  # Just define model_name for normal dispatching
-  def self.model_name
-    ActiveModel::Name.new(self, nil, "Post")
-  end
-end
-
+```ruby
+    class Post < RedisModel
+      # Define all model attributes
+      set_attributes :title, :body, :author
+    
+      # or
+      # attribute :title
+      # attribute :body
+      # ...
+    
+      # ActiveMode::Validations are already included
+      validates :title, :body, presence: true
+    
+      # Just define model_name for normal dispatching
+      def self.model_name
+        ActiveModel::Name.new(self, nil, "Post")
+      end
+    end
+```
 
 In action:
 
+```ruby
 post = Post.new # => #<Post:0x007fa8362f0dd8 @attributes={:title=>nil, :body=>nil, :author=>nil}>
 post.save       # => false
 post.valid?     # => false
@@ -44,9 +46,11 @@ Post.find('f6f0afbc2e790098cb2b') #=> Find record by id
 Post.find_by(:title, 'My Post') # => Find first record with value of such attribute
 
 Post.destroy_all # => Destroy all records from Redis
+```
 
 Additional:
 
+```ruby
 post.attributes # => all attributes with values
 post.update(title: 'Second Post') # => Update object (and save it)
 post.unique?(:title) # Check about uniquness for some attribiute
@@ -61,3 +65,4 @@ Post.attributes # => get all colums list
 ActiveModel::Serializers available
 post.to_json
 post.to_xml
+```
