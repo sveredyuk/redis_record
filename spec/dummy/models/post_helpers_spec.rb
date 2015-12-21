@@ -49,6 +49,21 @@ describe Post do
       end
     end
 
+    describe '#new_record?' do
+      context 'when new record' do
+        it 'return true' do
+          expect(post.new_record?).to eq true
+        end
+      end
+
+      context 'when exist record' do
+        it 'return false' do
+          post.save
+          expect(post.new_record?).to eq false
+        end
+      end
+    end
+
     describe '#fields' do
       it 'return a hash of fields' do
         setup

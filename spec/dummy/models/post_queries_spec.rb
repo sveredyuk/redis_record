@@ -26,6 +26,51 @@ describe Post do
       end
     end
 
+    describe '.count' do
+      context 'when record present' do
+        before { setup }
+        it 'return 3 items' do
+          expect(Post.count).to eq 3
+        end
+      end
+
+      context 'when records not present' do
+        it 'return empty array' do
+          expect(Post.count).to eq 0
+        end
+      end
+    end
+
+    describe '.first' do
+      context 'when record present' do
+        before { setup }
+        it 'return first items' do
+          expect(Post.first.id).to eq Post.all[0].id
+        end
+      end
+
+      context 'when records not present' do
+        it 'return nil array' do
+          expect(Post.first).to eq nil
+        end
+      end
+    end
+
+    describe '.last' do
+      context 'when record present' do
+        before { setup }
+        it 'return last items' do
+          expect(Post.last.id).to eq Post.all[2].id
+        end
+      end
+
+      context 'when records not present' do
+        it 'return nil array' do
+          expect(Post.last).to eq nil
+        end
+      end
+    end
+
     describe 'find' do
       context 'when records present' do
         before { setup }

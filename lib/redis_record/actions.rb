@@ -33,5 +33,9 @@ module RedisRecord
     def destroy
       redis.del(key)
     end
+
+    def reload
+      self.class.find(id)
+    end
   end
 end

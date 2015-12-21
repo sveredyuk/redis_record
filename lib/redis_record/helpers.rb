@@ -16,6 +16,10 @@ module RedisRecord
       persisted? ? id : nil
     end
 
+    def new_record?
+      to_param ? false : true
+    end
+
     def attributes
       @fields.dup
     end

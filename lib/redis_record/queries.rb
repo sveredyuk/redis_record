@@ -6,6 +6,18 @@ module RedisRecord
       end
     end
 
+    def count
+      all.size > 0 ? all.size : 0
+    end
+
+    def first
+      all.first
+    end
+
+    def last
+      all.last
+    end
+
     def find(id)
       redis.exists(key(id)) ? new(normalize_hash(redis.hgetall(key(id)))) : nil
     end

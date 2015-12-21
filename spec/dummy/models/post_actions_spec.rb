@@ -122,5 +122,14 @@ describe Post do
         expect(Post.all.size).to eq 0
       end
     end
+
+    describe '#reload' do
+      it 'reload object from db' do
+        post.title = 'ITwork!'
+        post.save
+        post.title = 'Tra-ta-ta'
+        expect(post.reload.title).to eq 'ITwork!'
+      end
+    end
   end
 end
