@@ -32,6 +32,7 @@ module RedisRecord
 
     def destroy
       redis.del(key)
+      true
     end
 
     def reload

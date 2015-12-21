@@ -121,6 +121,11 @@ describe Post do
         post.destroy
         expect(Post.all.size).to eq 0
       end
+
+      it 'return true' do
+        post.save
+        expect(post.destroy).to eq true
+      end
     end
 
     describe '#reload' do
