@@ -9,7 +9,11 @@ module RedisRecord
     end
 
     def persisted?
-      false
+      find_by(:id, id)
+    end
+
+    def to_param
+      persisted? ? id : nil
     end
 
     def attributes

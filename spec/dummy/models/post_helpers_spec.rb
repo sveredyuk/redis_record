@@ -18,8 +18,34 @@ describe Post do
     end
 
     describe '#persisted?' do
-      it 'must be false' do
-        expect(post.persisted?).to eq false
+      context 'when new record' do
+        it 'return nil' do
+          expect(post.persisted?).to eq nil
+        end
+      end
+
+      context 'when exist record' do
+        it 'return self' do
+          post.save
+          expect(post).to receive(:persisted?).and_return(post)
+          post.persisted?
+        end
+      end
+    end
+
+    describe '#to_param' do
+      context 'when new record' do
+        it 'return nil' do
+          expect(post.to_param).to eq nil
+        end
+      end
+
+      context 'when exist record' do
+        it 'return id' do
+          post.save
+          expect(post).to receive(:persisted?).and_return(post.id)
+          post.to_param
+        end
       end
     end
 

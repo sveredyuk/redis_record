@@ -21,6 +21,8 @@ require 'redis_record/associations'
 module RedisRecord
   class Base
     include ActiveModel::Model
+    include ActiveModel::Serializers::JSON
+    include ActiveModel::Serializers::Xml
 
     extend Connection
     extend Fields
