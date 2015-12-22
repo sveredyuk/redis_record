@@ -5,10 +5,10 @@ Gem provide simple ORM for `redis/ruby/rails`.
 ## Description
 
 You could easy operate with objects in `ActiveRecord/Mongoid` API like style.
-The main goal was create 100% compatible API with rails controllers and be almost same like ActiveRecord API.
+The main goal is to create 100% compatible API with rails controllers and maximum simular ActiveRecord API.
 
-Try to generate simple scaffold with all MVC and than just change ActiveRecord model to RedisRecord (with all fields defined).
-And try it! It great works!
+Try to generate simple MVC scaffoldand just change ActiveRecord model to RedisRecord (with all fields defined).
+And try it! It works great!
 
 Great thanks for inspiration and support to **Michael Lutsiuk** and all members of my team.
 
@@ -16,7 +16,7 @@ Great thanks for inspiration and support to **Michael Lutsiuk** and all members 
 
 After release, gem will be added to `rubygems`
 
-Until please use github tag in you Gemfile:
+Until please use github tag in your Gemfile:
 ```ruby
 gem 'redis_record', github: 'svereredyuk/redis_record'
 ```
@@ -38,7 +38,7 @@ Define single `field` with some type (String is default if type not defined) or 
 fields: title, :body, :author, type: String
 ```
 
-You could define the default value for field by `default` option.
+You could define the default value of field using `default` option.
 
 Field's type depent at value assign and parse when call:
 
@@ -64,7 +64,7 @@ p.reload        #=> nil
 ```
 
 ## Field Types
-Current library support next types:
+Current version of gem support few types:
 * String (by default if not defined)
 * Integer
 * Float
@@ -93,9 +93,7 @@ p.valid?  #=> true
 p.save    #=> true
 ```
 
-Uniqueness validations meet some troubles such as it is part of `ActiveRecord::Validations` and depent on database adapter.
-
-But you could use `#unique?` method:
+Uniqueness validations meet some troubles such as it's part of `ActiveRecord::Validations` and depent on database adapter. But you could use `#unique?` method:
 
 ```ruby
 p.title = "Test"
@@ -104,8 +102,6 @@ p.save
 new_post = Post.new(title: "Test")
 new_post.unique?(:title) #=> false
 ```
-
-`TODO: Add special uniqueness validator.`
 
 ## Serializations
 
@@ -132,7 +128,7 @@ For connection to Redis we use `Redis.current` from `redis-rb` lib.
 Post.reids #=> #<Redis client v3.2.2 for redis://127.0.0.1:6379/0>
 ```
 
-Manage seetings in your `redis.yml`
+You could manage connection seetings in your `redis.yml` file.
 
 ## TODO
 
