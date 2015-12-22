@@ -21,7 +21,7 @@ Until please use github tag in your Gemfile:
 gem 'redis_record', git: 'git@github.com:sveredyuk/redis_record.git'
 ```
 
-You can use generator for create initialize file:
+You can use generator:
 ```ruby
 rails generate redis_record
 ```
@@ -29,7 +29,7 @@ This will create: config/initializers/redis_record.rb
 ```ruby
 RedisRecord::Config.namespace = 'RedisRecord_6822b3923f'
 ```
-Be careful with changing namespace, it will be create new empty closet for your data.
+**Be careful with changing namespace, it will be create new empty closet for your data.**
 
 ## Example
 ```ruby
