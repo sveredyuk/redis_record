@@ -1,6 +1,6 @@
 # RedisRecord
 
-Gem provide simple ORM for `redis/ruby/rails`.
+Gem provides simple ORM for `redis/ruby/rails`.
 
 ## Description
 
@@ -122,7 +122,7 @@ Also included `ActiveModel::Serializers::JSON` and `ActiveModel::Serializers::Xm
 
 ## Connection
 
-For connection to Redis we use `Redis.current` from `redis-rb` lib.
+For connection to Redis we use `Redis.new` from `redis-rb` lib.
 
 ```ruby
 Post.reids #=> #<Redis client v3.2.2 for redis://127.0.0.1:6379/0>
