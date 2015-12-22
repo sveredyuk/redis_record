@@ -18,7 +18,7 @@ After release, gem will be added to `rubygems`
 
 Until please use github tag in your Gemfile:
 ```ruby
-gem 'redis_record', github: 'svereredyuk/redis_record'
+gem 'redis_record', git: 'git@github.com:sveredyuk/redis_record.git'
 ```
 
 ## Example

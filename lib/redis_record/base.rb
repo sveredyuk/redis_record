@@ -1,5 +1,4 @@
 require 'redis'
-require 'pry-rails'
 
 # BASE
 require 'redis_record/connection'
