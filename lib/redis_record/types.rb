@@ -2,9 +2,9 @@ module RedisRecord
   module Types
 
     def set_type(name, type)
-      @types = redis.hgetall("#{self}Types")
+      @types = redis.hgetall("#{namespace}:#{self}Types")
       @types.merge!(name => type)
-      redis.mapped_hmset("#{self}Types", @types)
+      redis.mapped_hmset("#{namespace}:#{self}Types", @types)
     end
 
     def types

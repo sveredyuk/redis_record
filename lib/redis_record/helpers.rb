@@ -24,6 +24,10 @@ module RedisRecord
       @fields.dup
     end
 
+    def namespace
+      self.class.namespace
+    end
+
     private
 
     def find_by(atr, value)

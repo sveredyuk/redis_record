@@ -1,7 +1,7 @@
 module RedisRecord
   module Key
     def key(id)
-      "#{name}:#{id}"
+      "#{namespace}:#{name}:#{id}"
     end
   end
 end

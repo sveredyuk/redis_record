@@ -71,7 +71,7 @@ describe Post do
       end
     end
 
-    describe 'find' do
+    describe '.find' do
       context 'when records present' do
         before { setup }
         it 'return correct record' do
@@ -89,7 +89,7 @@ describe Post do
       end
     end
 
-    describe 'find_by' do
+    describe '.find_by' do
       context 'when records present' do
         before { setup }
         it 'return correct record for correct ID' do
@@ -116,7 +116,7 @@ describe Post do
       end
     end
 
-    describe 'destroy_all' do
+    describe '.destroy_all' do
       context 'when records present' do
         before { setup }
         it 'remove all records from redis' do
@@ -133,6 +133,12 @@ describe Post do
         it 'return 0' do
           expect(Post.destroy_all).to eq 0
         end
+      end
+    end
+
+    describe '.namespace' do
+      it 'same as configured namespace' do
+        expect(Post.namespace).to eq RedisRecord::Config.namespace
       end
     end
   end

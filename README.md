@@ -12,7 +12,7 @@ And try it! It works great!
 
 Great thanks for inspiration and support to **Michael Lutsiuk** and all members of my team.
 
-## Installation
+## Installation & Setup
 
 After release, gem will be added to `rubygems`
 
@@ -20,6 +20,16 @@ Until please use github tag in your Gemfile:
 ```ruby
 gem 'redis_record', git: 'git@github.com:sveredyuk/redis_record.git'
 ```
+
+You can use generator for create initialize file:
+```ruby
+rails generate redis_record
+```
+This will create: config/initializers/redis_record.rb
+```ruby
+RedisRecord::Config.namespace = 'RedisRecord_6822b3923f'
+```
+Be careful with changing namespace, it will be create new empty closet for your data.
 
 ## Example
 ```ruby

@@ -13,7 +13,7 @@ describe Post do
   describe 'Key' do
     describe '.key' do
       it 'return correct key name' do
-        expect(Post.key("123")).to eq 'Post:123'
+        expect(Post.key("123")).to eq "#{Post.namespace}:Post:123"
       end
     end
   end

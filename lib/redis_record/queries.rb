@@ -1,7 +1,7 @@
 module RedisRecord
   module Queries
     def all
-      redis.scan_each(match: "#{name}:*").map do |key|
+      redis.scan_each(match: "#{namespace}:#{name}:*").map do |key|
         find(key.split(':').last)
       end
     end
@@ -28,6 +28,10 @@ module RedisRecord
 
     def destroy_all
       all.each(&:destroy).size
+    end
+
+    def namespace
+      RedisRecord::Config.namespace
     end
 
     private

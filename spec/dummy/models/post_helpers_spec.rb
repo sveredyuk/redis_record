@@ -71,5 +71,11 @@ describe Post do
         expect(p.attributes).to eq p.instance_variable_get('@fields')
       end
     end
+
+    describe '.namespace' do
+      it 'same as configured namespace' do
+        expect(post.namespace).to eq RedisRecord::Config.namespace
+      end
+    end
   end
 end
